@@ -13,10 +13,6 @@ class IndeedGlobal {
      */
     var memoryLeakCount:Int = 0
     
-    func reset() {
-        
-    }
-    
     init() {
         print("IndeedGlobal: init")
     }

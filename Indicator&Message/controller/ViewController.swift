@@ -58,11 +58,12 @@ class ViewController: UIViewController {
             return _tableData
         }
     }
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //object sets nil on ViewController disapeare
+        
         mem2 = MemoryTest(s: "popupVCtestAppeare")
         
         if tableView != nil {

@@ -25,13 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let newView = MessageView.instanceFromNib() as! MessageView
         return newView
     }()
-    
-    private var tillShowCounter: UILabel?
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // calls only ones
         
-        globals = IndeedGlobal()
         
         
         //get dev orientation
@@ -40,11 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //notif sound and vibrate
         //if message showing - add to array
-        UIView.animate(withDuration: 0.3) {
-            self.window?.alpha = 1
-        } completion: { _ in
-            
-        }
+        
 
         
         AppDelegate.shared = self
@@ -59,6 +51,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         startTimers()
         return true
     }
+    
+    
+    private var tillShowCounter: UILabel?
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        globals = IndeedGlobal()
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.3) {
+                self.window?.alpha = 1
+            } completion: { _ in
+                
+            }
+        }
+    }
+    
     
     func startTimers() {
         var count = 0
@@ -100,7 +106,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     func applicationWillResignActive(_ application: UIApplication) {
-        self.window?.alpha = 0
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.65) {
+                self.window?.alpha = 0.2
+            } completion: { _ in
+                
+            }
+        }
         globals = nil
     }
 
