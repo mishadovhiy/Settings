@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         tableData = [
             TableDataSections(title: "Activity indicator", cells: createAISection(), hidden: false, headerSwitch: nil, errorText: "some test error some test error some test error some test error some test error"),
             TableDataSections(title: "message", cells: createMessageSection(), hidden: false, headerSwitch: nil, errorText: ""),
-            TableDataSections(title: "leak test \(memoryObjects)", cells: memoryLeakTestSection(), hidden: false, headerSwitch: nil, errorText: ""),
+            TableDataSections(title: "leak test \(appDelegate?.globals?.memoryLeakCount ?? -1)", cells: memoryLeakTestSection(), hidden: false, headerSwitch: nil, errorText: ""),
             TableDataSections(title: "Segues", cells: createSequesSection(), hidden: false, headerSwitch: nil, errorText: "")
         ]
     }
@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     var mem2:MemoryTest?
     func memoryLeakTestSection() -> [ViewController.TableDataCell] {
         let leakOne = buttonDataType(title: "createLeak", activityLoading: false, type: .standartButton, enabled: true) {
-            self.mem1 = MemoryTest(s: "1:\(memoryObjects)")
+            self.mem1 = MemoryTest(s: "1:\(self.appDelegate?.globals?.memoryLeakCount ?? -1)")
             self.loadData()
         }
         
@@ -73,7 +73,9 @@ class ViewController: UIViewController {
         
     }
 
-   
+    lazy var appDelegate:AppDelegate? = {
+        return AppDelegate.shared
+    }()
     
     
     func showAlertsTESTS(n: Int) {
@@ -196,11 +198,11 @@ class ViewController: UIViewController {
             self.showAlertsTESTS(n: 10)
         }
         
-        let timer = AppDelegate.shared?.stopTimer ?? false
+        let timer = appDelegate?.stopTimer ?? false
         let stopTimer = buttonDataType(title: (timer ? "Start" : "Stop") + " timer", activityLoading: false, type: .standartButton, enabled: true) {
-            AppDelegate.shared?.stopTimer = timer ? false : true
+            self.appDelegate?.stopTimer = timer ? false : true
             if timer {
-                AppDelegate.shared?.startTimers()
+                self.appDelegate?.startTimers()
             }
             self.loadData()
             DispatchQueue.main.async {

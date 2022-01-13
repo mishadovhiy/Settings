@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8B1933902790ACCE0071C00C /* MemoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B19338F2790ACCE0071C00C /* MemoryTest.swift */; };
+		8B1933922790B9E00071C00C /* IndeedGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1933912790B9E00071C00C /* IndeedGlobal.swift */; };
 		8B6DB27426D97D5A00E06EE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6DB27326D97D5A00E06EE9 /* AppDelegate.swift */; };
 		8B6DB27826D97D5A00E06EE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6DB27726D97D5A00E06EE9 /* ViewController.swift */; };
 		8B6DB27B26D97D5A00E06EE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B6DB27926D97D5A00E06EE9 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		8B19338F2790ACCE0071C00C /* MemoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryTest.swift; sourceTree = "<group>"; };
+		8B1933912790B9E00071C00C /* IndeedGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndeedGlobal.swift; sourceTree = "<group>"; };
 		8B6DB27026D97D5A00E06EE9 /* Indicator&Message.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Indicator&Message.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6DB27326D97D5A00E06EE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B6DB27726D97D5A00E06EE9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				8B6DB28726D97DFC00E06EE9 /* IndicatorView.swift */,
 				8B6DB28E26DA5DF400E06EE9 /* MessageView.swift */,
 				8B19338F2790ACCE0071C00C /* MemoryTest.swift */,
+				8B1933912790B9E00071C00C /* IndeedGlobal.swift */,
 			);
 			path = modul;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B6DB28F26DA5DF400E06EE9 /* MessageView.swift in Sources */,
+				8B1933922790B9E00071C00C /* IndeedGlobal.swift in Sources */,
 				8B1933902790ACCE0071C00C /* MemoryTest.swift in Sources */,
 				8B6DB27826D97D5A00E06EE9 /* ViewController.swift in Sources */,
 				8B6DB27426D97D5A00E06EE9 /* AppDelegate.swift in Sources */,

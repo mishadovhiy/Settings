@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     static var shared:AppDelegate?
     
+    var globals:IndeedGlobal?
+    
     lazy var ai: IndicatorView = {
         let newView = IndicatorView.instanceFromNib() as! IndicatorView
         return newView
@@ -29,13 +31,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        globals = IndeedGlobal()
+        
+        
         //get dev orientation
         //when message showed - allow only that orientation
         // when hides - .all (allow all)
         
         //notif sound and vibrate
         //if message showing - add to array
-        
+        UIView.animate(withDuration: 0.3) {
+            self.window?.alpha = 1
+        } completion: { _ in
+            
+        }
+
         
         AppDelegate.shared = self
         DispatchQueue.main.async {
@@ -89,7 +99,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
+    func applicationWillResignActive(_ application: UIApplication) {
+        self.window?.alpha = 0
+        globals = nil
+    }
 
     private func showMessageTEST() {
         let okButton = IndicatorView.button(title: "OK", style: .error, close: true) { _ in

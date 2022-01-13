@@ -7,24 +7,22 @@
 
 import UIKit
 
-var memoryObjects = 0
 class MemoryTest {
     
     let string: String
     var memory:Memoryy?
+    lazy var appDelegate:AppDelegate? = {
+        return AppDelegate.shared
+    }()
     
     init(s:String) {
         self.string = s
-        print(memoryObjects, "MemoryTest init:", string)
-       // DispatchQueue.main.async { //затестить на краш когда сразу вызывается
-            memoryObjects += 1
-        //}
+        print(appDelegate?.globals?.memoryLeakCount ?? -1, "MemoryTest init:", string)
+        appDelegate?.globals?.memoryLeakCount += 1
     }
     deinit {
-        print(memoryObjects, "MemoryTest deinit:", string)
-        //DispatchQueue.main.async {
-            memoryObjects -= 1
-       // }
+        print(appDelegate?.globals?.memoryLeakCount, "MemoryTest deinit:", string)
+        appDelegate?.globals?.memoryLeakCount -= 1
     }
 }
 
