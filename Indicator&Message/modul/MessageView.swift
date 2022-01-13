@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MessageView: UIView {
 
@@ -19,16 +20,6 @@ class MessageView: UIView {
         hideMessage()
     }
     
-  /*  override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let subviews = self.subviews
-        var hitView:UIView? = nil
-        for i in 0..<subviews.count {
-            print("description: ", subviews[i].debugDescription, " i: ", i)
-            hitView = subviews[i]
-        }
-        return hitView
-    }*/
-    
     
     override func draw(_ rect: CGRect) {
         self.mainView.layer.shadowColor = UIColor.black.cgColor
@@ -40,7 +31,6 @@ class MessageView: UIView {
         swipeTop.direction = .up
         self.mainView.addGestureRecognizer(swipeTop)
         self.translatesAutoresizingMaskIntoConstraints = true
-       // self.mainView.translatesAutoresizingMaskIntoConstraints = true
     }
 
     @objc private func closeSwipe(_ sender: UISwipeGestureRecognizer) {
@@ -49,9 +39,25 @@ class MessageView: UIView {
     
     
     
-    
+    var isShowing = false
     func show(title: String, description: String?, type:viewType, customImage: UIImage? = nil, autohide: TimeInterval? = 7.0) {
 
+        
+        
+        if isShowing {
+            let new = {
+                self.show(title: title, description: description, type: type, customImage: customImage, autohide: autohide)
+            }
+            self.unshowedMessages.append(new)
+            DispatchQueue.main.async {
+                AudioServicesPlaySystemSound(4095)
+                self.unseenCounterLabel.text = "\(self.unshowedMessages.count)"
+            }
+            return
+        } else {
+            isShowing = true
+        }
+        AudioServicesPlaySystemSound(1007)
         DispatchQueue.main.async {
             let window = UIApplication.shared.keyWindow ?? UIWindow()
             self.frame = window.frame
@@ -59,34 +65,40 @@ class MessageView: UIView {
             
             let top = self.mainView.frame.maxY
             print("message appeare from top:", top)
-            self.mainView.layer.transform = CATransform3DTranslate(CATransform3DIdentity, 0, (top + 10) * (-1), 0)
+            self.mainView.layer.transform = CATransform3DTranslate(CATransform3DIdentity, 0, 500, 0)
             
             
             
             self.titleLabel.text = title
             self.descriptionLabel.text = description
             self.descriptionLabel.isHidden = description ?? "" == "" ? true : false
-            
+            self.mainImage.superview?.isHidden = (type == .error || type == .succsess) ? false : true
             switch type {
             case .error:
-                self.mainView.backgroundColor = self.errorColor
+               // self.mainView.backgroundColor = self.errorColor
                 self.mainImage.image = self.errorImage
             case .succsess:
-                self.mainView.backgroundColor = self.succsessColor
+              //  self.mainView.backgroundColor = self.succsessColor
                 self.mainImage.image = self.succsessImage
             case .standart:
-                self.mainView.backgroundColor = .white
+                break
+              //  self.mainView.backgroundColor = .white
             }
             self.alpha = 1
             
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: 0.15) {
                 self.mainView.layer.transform = CATransform3DTranslate(CATransform3DIdentity, 0, 0, 0)
             } completion: { _ in
-                self.frame = self.mainView.frame
-                
-                if let hideTimer = autohide {
-                    self.startTimer(secs: hideTimer)
+                UIView.animate(withDuration: 0.20) {
+                    self.frame = self.mainView.frame
+                } completion: { _ in
+                    if let hideTimer = autohide {
+                        self.startTimer(secs: hideTimer)
+                    }
                 }
+
+                
+                
                 
             }
 
@@ -96,22 +108,29 @@ class MessageView: UIView {
     
     private var timer: Timer?
     private func startTimer(secs: TimeInterval) {
-        let timerr = Timer.scheduledTimer(withTimeInterval: secs, repeats: false) { tim in
+        timer = Timer.scheduledTimer(withTimeInterval: secs, repeats: false) { tim in
             tim.invalidate()
             self.hideMessage()
         }
-        timer = timerr
     }
 
+    @IBOutlet weak var unseenCounterLabel: UILabel!
     
     private func hideMessage() {
+        timer?.invalidate()
+        isShowing = false
         DispatchQueue.main.async {
-            let top = self.mainView.frame.maxY
-            print("message appeare from top:", top)
             UIView.animate(withDuration: 0.3) {
-                self.mainView.layer.transform = CATransform3DTranslate(CATransform3DIdentity, 0, (top + 10) * (-1), 0)
+                self.mainView.layer.transform = CATransform3DTranslate(CATransform3DIdentity, 0, -500, 0)
             } completion: { _ in
-                self.removeFromSuperview()
+                if let function = self.unshowedMessages.first as? () -> ()  {
+                    self.unshowedMessages.removeFirst()
+                    self.unseenCounterLabel.text = self.unshowedMessages.count == 0 ? "" : "\(self.unshowedMessages.count)"
+                    function()
+                } else {
+                    self.removeFromSuperview()
+                }
+                
             }
 
         }

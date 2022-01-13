@@ -7,23 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B1933902790ACCE0071C00C /* MemoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B19338F2790ACCE0071C00C /* MemoryTest.swift */; };
 		8B6DB27426D97D5A00E06EE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6DB27326D97D5A00E06EE9 /* AppDelegate.swift */; };
-		8B6DB27626D97D5A00E06EE9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6DB27526D97D5A00E06EE9 /* SceneDelegate.swift */; };
 		8B6DB27826D97D5A00E06EE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6DB27726D97D5A00E06EE9 /* ViewController.swift */; };
 		8B6DB27B26D97D5A00E06EE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B6DB27926D97D5A00E06EE9 /* Main.storyboard */; };
 		8B6DB27D26D97D5F00E06EE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B6DB27C26D97D5F00E06EE9 /* Assets.xcassets */; };
 		8B6DB28026D97D5F00E06EE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B6DB27E26D97D5F00E06EE9 /* LaunchScreen.storyboard */; };
+		8B6DB28926D97DFC00E06EE9 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6DB28726D97DFC00E06EE9 /* IndicatorView.swift */; };
+		8B6DB28A26D97DFC00E06EE9 /* IndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6DB28826D97DFC00E06EE9 /* IndicatorView.xib */; };
+		8B6DB28D26DA5AFA00E06EE9 /* Message.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6DB28C26DA5AFA00E06EE9 /* Message.xib */; };
+		8B6DB28F26DA5DF400E06EE9 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6DB28E26DA5DF400E06EE9 /* MessageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B19338F2790ACCE0071C00C /* MemoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryTest.swift; sourceTree = "<group>"; };
 		8B6DB27026D97D5A00E06EE9 /* Indicator&Message.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Indicator&Message.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6DB27326D97D5A00E06EE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8B6DB27526D97D5A00E06EE9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8B6DB27726D97D5A00E06EE9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8B6DB27A26D97D5A00E06EE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8B6DB27C26D97D5F00E06EE9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B6DB27F26D97D5F00E06EE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8B6DB28126D97D5F00E06EE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B6DB28726D97DFC00E06EE9 /* IndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
+		8B6DB28826D97DFC00E06EE9 /* IndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IndicatorView.xib; sourceTree = "<group>"; };
+		8B6DB28C26DA5AFA00E06EE9 /* Message.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Message.xib; sourceTree = "<group>"; };
+		8B6DB28E26DA5DF400E06EE9 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,14 +65,42 @@
 			isa = PBXGroup;
 			children = (
 				8B6DB27326D97D5A00E06EE9 /* AppDelegate.swift */,
-				8B6DB27526D97D5A00E06EE9 /* SceneDelegate.swift */,
-				8B6DB27726D97D5A00E06EE9 /* ViewController.swift */,
-				8B6DB27926D97D5A00E06EE9 /* Main.storyboard */,
+				8BD69CCB26DA8C24008C5376 /* modul */,
+				8B6DB28B26DA5AA900E06EE9 /* controller */,
+				8BD69CCC26DA8C5D008C5376 /* view */,
 				8B6DB27C26D97D5F00E06EE9 /* Assets.xcassets */,
 				8B6DB27E26D97D5F00E06EE9 /* LaunchScreen.storyboard */,
 				8B6DB28126D97D5F00E06EE9 /* Info.plist */,
 			);
 			path = "Indicator&Message";
+			sourceTree = "<group>";
+		};
+		8B6DB28B26DA5AA900E06EE9 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				8B6DB27726D97D5A00E06EE9 /* ViewController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		8BD69CCB26DA8C24008C5376 /* modul */ = {
+			isa = PBXGroup;
+			children = (
+				8B6DB28726D97DFC00E06EE9 /* IndicatorView.swift */,
+				8B6DB28E26DA5DF400E06EE9 /* MessageView.swift */,
+				8B19338F2790ACCE0071C00C /* MemoryTest.swift */,
+			);
+			path = modul;
+			sourceTree = "<group>";
+		};
+		8BD69CCC26DA8C5D008C5376 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				8B6DB27926D97D5A00E06EE9 /* Main.storyboard */,
+				8B6DB28826D97DFC00E06EE9 /* IndicatorView.xib */,
+				8B6DB28C26DA5AFA00E06EE9 /* Message.xib */,
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,6 +162,8 @@
 			files = (
 				8B6DB28026D97D5F00E06EE9 /* LaunchScreen.storyboard in Resources */,
 				8B6DB27D26D97D5F00E06EE9 /* Assets.xcassets in Resources */,
+				8B6DB28A26D97DFC00E06EE9 /* IndicatorView.xib in Resources */,
+				8B6DB28D26DA5AFA00E06EE9 /* Message.xib in Resources */,
 				8B6DB27B26D97D5A00E06EE9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,9 +175,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B6DB28F26DA5DF400E06EE9 /* MessageView.swift in Sources */,
+				8B1933902790ACCE0071C00C /* MemoryTest.swift in Sources */,
 				8B6DB27826D97D5A00E06EE9 /* ViewController.swift in Sources */,
 				8B6DB27426D97D5A00E06EE9 /* AppDelegate.swift in Sources */,
-				8B6DB27626D97D5A00E06EE9 /* SceneDelegate.swift in Sources */,
+				8B6DB28926D97DFC00E06EE9 /* IndicatorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +329,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FQA2XH9ZUM;
 				INFOPLIST_FILE = "Indicator&Message/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -308,6 +349,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FQA2XH9ZUM;
 				INFOPLIST_FILE = "Indicator&Message/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

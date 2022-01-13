@@ -15,13 +15,36 @@ class ViewController: UIViewController {
     lazy var message = AppDelegate.shared?.message ?? MessageView(frame: .zero)
     
     func loadData() {
-        
         tableData = [
             TableDataSections(title: "Activity indicator", cells: createAISection(), hidden: false, headerSwitch: nil, errorText: "some test error some test error some test error some test error some test error"),
             TableDataSections(title: "message", cells: createMessageSection(), hidden: false, headerSwitch: nil, errorText: ""),
+            TableDataSections(title: "leak test \(memoryObjects)", cells: memoryLeakTestSection(), hidden: false, headerSwitch: nil, errorText: ""),
             TableDataSections(title: "Segues", cells: createSequesSection(), hidden: false, headerSwitch: nil, errorText: "")
         ]
+    }
+    
+    var mem1:MemoryTest?
+    var mem2:MemoryTest?
+    func memoryLeakTestSection() -> [ViewController.TableDataCell] {
+        let leakOne = buttonDataType(title: "createLeak", activityLoading: false, type: .standartButton, enabled: true) {
+            self.mem1 = MemoryTest(s: "1:\(memoryObjects)")
+            self.loadData()
+        }
         
+        let leakTwo = buttonDataType(title: "createLeak", activityLoading: false, type: .standartButton, enabled: true) {
+            self.mem1?.memory = Memoryy(s: "memoryyy")
+            self.loadData()
+        }
+
+        return [
+            TableDataCell(cellType: .button, button: leakOne),
+            TableDataCell(cellType: .button, button: leakTwo),
+        ]
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        close(1)
     }
     
     var tableData: [TableDataSections] {
@@ -39,6 +62,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //object sets nil on ViewController disapeare
+        mem2 = MemoryTest(s: "popupVCtestAppeare")
         
         if tableView != nil {
             tableView.delegate = self
@@ -63,30 +88,27 @@ class ViewController: UIViewController {
         }
         
         let nextButton = IndicatorView.button(title: "Next", style: .success, close: false) { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+            sleep(5)
                 self.performSegue(withIdentifier: "toNav", sender: self)
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+                sleep(5)
                     
                     if let hideTimer = backTimer {
                         self.ai.show { _ in
-                            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(hideTimer)) {
+                            sleep(UInt32(Int(hideTimer)))
                                 self.navigationController?.popToRootViewController(animated: true)
-                                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                                sleep(2)
                                     self.ai.fastHide { _ in
                                         
                                     }
-                                }
-                            }
+                                
+                            
                         }
                     } else {
                         self.ai.fastHide { _ in
                             
                         }
-                    }
-                    
-                }
-            }
-        }
+    }
+    }
         
         
      //   DispatchQueue.main.async {
@@ -102,6 +124,17 @@ class ViewController: UIViewController {
     
     func createAISection() -> [TableDataCell] {
         
+        let clearAI = buttonDataType(title: "clearAI", activityLoading: false, type: .standartButton, enabled: true) {
+            
+            DispatchQueue.main.async {
+                self.ai.show(title: nil, description: nil) { _ in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+                        self.showActionsTESTS(title: "Error", text: "Some error", type: .succsess)
+                    }
+                }
+            }
+        }
+        
         let errorButton = buttonDataType(title: "error", activityLoading: false, type: .standartButton, enabled: true) {
             
             DispatchQueue.main.async {
@@ -110,6 +143,18 @@ class ViewController: UIViewController {
                         self.showActionsTESTS(title: "Error", text: "Some error", type: .error)
                     }
                 }
+            }
+        }
+        let errorRapButton = buttonDataType(title: "error", activityLoading: false, type: .standartButton, enabled: true) {
+            
+            DispatchQueue.main.async {
+                self.showActionsTESTS(title: "Error", text: "Some error", type: .error)
+            }
+        }
+        let succsRapButton = buttonDataType(title: "scs", activityLoading: false, type: .standartButton, enabled: true) {
+            
+            DispatchQueue.main.async {
+                self.showActionsTESTS(title: "sucss", text: "Some sucss", type: .succsess)
             }
         }
         let scssButton = buttonDataType(title: "scss", activityLoading: false, type: .standartButton, enabled: true) {
@@ -158,15 +203,22 @@ class ViewController: UIViewController {
                 AppDelegate.shared?.startTimers()
             }
             self.loadData()
+            DispatchQueue.main.async {
+                self.message.show(title: "Timer: \(timer ? "started" : "stopped")", description: nil, type: .succsess)
+            }
         }
 
         return [
+            //clearAI
+            TableDataCell(cellType: .button, button: clearAI),
             TableDataCell(cellType: .button, button: errorButton),
             TableDataCell(cellType: .button, button: scssButton),
             TableDataCell(cellType: .button, button: nextButton),
             TableDataCell(cellType: .button, button: aLotButtons),
             TableDataCell(cellType: .button, button: nextBack),
-            TableDataCell(cellType: .button, button: stopTimer)
+            TableDataCell(cellType: .button, button: stopTimer),
+            TableDataCell(cellType: .button, button: errorRapButton),
+            TableDataCell(cellType: .button, button: succsRapButton),
         ]
     }
     func createMessageSection() -> [TableDataCell] {
@@ -183,11 +235,25 @@ class ViewController: UIViewController {
                 self.message.show(title: "sucsess", description: "some additionalText", type: .succsess)
             }
         }
+        let standartButton = buttonDataType(title: "standart", activityLoading: false, type: .standartButton) {
+            DispatchQueue.main.async {
+                self.message.show(title: "standart", description: "some additionalText", type: .standart)
+            }
+        }
+        let largButton = buttonDataType(title: "standart with img", activityLoading: false, type: .standartButton) {
+            self.toggle = self.toggle ? false : true
+            DispatchQueue.main.async {
+                self.message.show(title: "Some title", description: "Some additionalText with large text in a few lines and other stuff", type: self.toggle ? .error : .succsess)
+            }
+        }
         return [
             TableDataCell(cellType: .button, button: errorButton),
             TableDataCell(cellType: .button, button: succsessButton),
+            TableDataCell(cellType: .button, button: standartButton),
+            TableDataCell(cellType: .button, button: largButton),
         ]
     }
+    var toggle = false
     func createSequesSection() -> [TableDataCell] {
         let navButton = buttonDataType(title: "nav", activityLoading: false, type: .standartButton) {
             DispatchQueue.main.async {
@@ -339,6 +405,9 @@ extension ViewController {
         let endEditingAction:(Int) -> ()
     }
     
+    /**
+    - activityLoading: usage: didSelectRaw: show ai if true
+     */
     struct buttonDataType {
         
         let title: String

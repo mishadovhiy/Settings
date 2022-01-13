@@ -17,7 +17,7 @@ class IndicatorView: UIView {
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet weak var mainView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var closeButton: UIButton!
+    //@IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var textField: UITextField!
     @IBOutlet private weak var leftButton: UIButton!
@@ -52,12 +52,12 @@ class IndicatorView: UIView {
                 textField.addTarget(self, action: #selector(self.textfieldValueChanged), for: .editingChanged)
             }
 
-            self.mainViewShadow.layer.cornerRadius = 6
-            self.mainViewShadow.layer.shadowColor = UIColor.black.cgColor
-            self.mainViewShadow.layer.shadowOpacity = 0.3
-            self.mainViewShadow.layer.shadowOffset = .zero
-            self.mainViewShadow.layer.shadowRadius = 6
-            self.closeButton.layer.zPosition = 100
+            //self.mainViewShadow.layer.cornerRadius = 6
+            //self.mainViewShadow.layer.shadowColor = UIColor.black.cgColor
+            //self.mainViewShadow.layer.shadowOpacity = 0.3
+            //self.mainViewShadow.layer.shadowOffset = .zero
+            //self.mainViewShadow.layer.shadowRadius = 6
+         //   self.closeButton.layer.zPosition = 100
             self.rightButton.layer.cornerRadius = 6
             self.leftButton.layer.cornerRadius = 6
             self.mainView.layer.cornerRadius = 6
@@ -175,7 +175,7 @@ class IndicatorView: UIView {
             DispatchQueue.main.async {
                 self.titleLabel.isHidden = false
                 self.titleLabel.text = title
-                self.titleLabel.font = .systemFont(ofSize: 21, weight: .medium)
+              //  self.titleLabel.font = .systemFont(ofSize: 21, weight: .medium)
                 UIView.animate(withDuration: 0.15) {
                     self.titleLabel.isHidden = title == nil ? true : false
                     self.descriptionLabel.isHidden = true
@@ -195,7 +195,7 @@ class IndicatorView: UIView {
         }
     }
 
-    @IBOutlet weak var mainViewShadow: UIView!
+    //@IBOutlet weak var mainViewShadow: UIView!
     
     @IBOutlet weak var tableSecondTitle: UILabel!
     struct button {
@@ -222,9 +222,8 @@ class IndicatorView: UIView {
                         self.imageView.image = UIImage(named: "warning")
                         self.mainView.layer.shadowOpacity = 0.9
                         self.titleLabel.font = .systemFont(ofSize: 32, weight: .bold)
-                        self.titleLabel.textColor = .black
-                        self.descriptionLabel.textColor = .black
-                        self.mainView.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.9)
+
+                        //self.mainView.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.9)
                         
                         self.imageView.superview?.isHidden = false
 
@@ -245,10 +244,9 @@ class IndicatorView: UIView {
                         self.imageView.image = UIImage(named: "warning")
                     }
                     self.imageView.superview?.isHidden = true
-                    self.titleLabel.font = .systemFont(ofSize: newValue == .standardError ? 32 : 28, weight: .bold)
-                    self.titleLabel.textColor = .black
-                    self.descriptionLabel.textColor = .black
-                    self.mainView.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.9)
+                    
+                    self.titleLabel.font = newValue == .standardError ? self.errorFont : self.normalTitleSize //systemFont(ofSize: newValue == .standardError ? 32 : 28, weight: .bold)
+                   // self.mainView.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.9)
                     
                     
                     UIView.animate(withDuration: 0.3) {
@@ -260,20 +258,16 @@ class IndicatorView: UIView {
                 case .ai:
                     self.leftButton.layer.shadowOpacity = 0
                     self.mainView.layer.shadowOpacity = 0.3
-                    self.titleLabel.font = .systemFont(ofSize: 23, weight: .regular)
-                    self.titleLabel.textColor = .white
-                    self.descriptionLabel.textColor = .white
-                    self.mainView.backgroundColor = .black//UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.1)
+                   // self.titleLabel.font = .systemFont(ofSize: 23, weight: .regular)
+                    //self.mainView.backgroundColor = .black//UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.1)
                 case .succsess:
                     self.leftButton.layer.shadowOpacity = 0
                     self.mainView.layer.shadowOpacity = 0.3
-                    self.titleLabel.font = .systemFont(ofSize: 27, weight: .semibold)
+                   // self.titleLabel.font = .systemFont(ofSize: 27, weight: .semibold)
                     self.imageView.image = UIImage(named: "success")
                     UIView.animate(withDuration: 0.3) {
                         self.imageView.superview?.isHidden = false
-                        self.titleLabel.textColor = .black
-                        self.descriptionLabel.textColor = .black
-                        self.mainView.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.9)
+                        //self.mainView.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.9)
                     } completion: { _ in
                         UIView.animate(withDuration: 0.3) {
                             self.backgroundHelper.backgroundColor = self.accentBackgroundColor
@@ -293,7 +287,7 @@ class IndicatorView: UIView {
         }
     }
     
-    
+    let errorFont = UIFont.systemFont(ofSize: 32, weight: .bold)
     enum ViewType {
         case error
         case succsess
@@ -320,30 +314,21 @@ class IndicatorView: UIView {
         }
     }
     
-    private let blueColor = UIColor(red: 17/255, green: 73/255, blue: 180/255, alpha: 1)
-    private let lightBlueColor = UIColor(red: 33/255, green: 97/255, blue: 221/255, alpha: 1)
+    private let blueColor = UIColor(red: 20/255, green: 94/255, blue: 244/255, alpha: 1)
+    private let lightBlueColor = UIColor(red: 163/255, green: 163/255, blue: 163/255, alpha: 1)
     private func setStyle(button: UIButton, style: ButtonType) {
-        switch style {
-        case .error:
-            button.backgroundColor = .red
-            button.setTitleColor(.white, for: .normal)
-            button.layer.shadowColor = UIColor.red.cgColor
-            button.layer.shadowOpacity = 0.15
-            button.layer.shadowOffset = .zero
-            button.layer.shadowRadius = 6
-        case .standart:
-            button.backgroundColor = .lightGray
-            button.layer.shadowOpacity = 0
-            button.setTitleColor(blueColor, for: .normal)
-        case .success:
-            
-            button.layer.shadowOpacity = 0.15
-            button.layer.shadowOffset = .zero
-            button.layer.shadowRadius = 6
-            button.backgroundColor = lightBlueColor
-            button.layer.shadowColor = blueColor.cgColor
-            button.setTitleColor(.white, for: .normal)
-
+        DispatchQueue.main.async {
+            switch style {
+            case .error:
+                button.backgroundColor = .red
+                button.setTitleColor(.white, for: .normal)
+            case .standart:
+                button.backgroundColor = self.lightBlueColor
+                button.setTitleColor(self.blueColor, for: .normal)
+            case .success:
+                button.backgroundColor = self.blueColor
+                button.setTitleColor(.white, for: .normal)
+            }
         }
     }
     
@@ -372,6 +357,8 @@ class IndicatorView: UIView {
         
             self.hideIndicatorBlockDesibled = false
         
+            self.setStyle(button: self.rightButton, style: buttons.1?.style ?? .standart)
+            self.setStyle(button: self.leftButton, style: buttons.0.style)
             self.leftFunc?.0 = buttons.0.action
             self.leftFunc = (buttons.0.action, buttons.0.close)
             self.setCompletionTable(data: descriptionTable)
@@ -391,8 +378,6 @@ class IndicatorView: UIView {
             if type == .error {
                 UIImpactFeedbackGenerator().impactOccurred()
             }
-            self.setStyle(button: self.rightButton, style: buttons.1?.style ?? .standart)
-            self.setStyle(button: self.leftButton, style: buttons.0.style)
             self.leftButton.setTitle(buttons.0.title, for: .normal)
             if buttons.1 != nil{
                 self.rightButton.setTitle(buttons.1?.title ?? "Cancel", for: .normal)
@@ -417,9 +402,9 @@ class IndicatorView: UIView {
                 } completion: { (_) in
                     self.ai.stopAnimating()
                     if showCloseButton {
-                        UIView.animate(withDuration: 0.15) {
+                      /*  UIView.animate(withDuration: 0.15) {
                             self.closeButton.isHidden = false
-                        }
+                        }*/
                         
                     }
                 }
@@ -535,7 +520,7 @@ class IndicatorView: UIView {
                     self.textField.isHidden = false
                     self.userDataStack.isHidden = showUserStack ? false : true
 
-                    self.closeButton.isHidden = false
+                //    self.closeButton.isHidden = false
                      self.mainView.layer.transform = CATransform3DTranslate(CATransform3DIdentity, 0, self.moveMainOnTop * (-1), 0)
                      if needAdditionalButton {
                          self.additionalDoneButton.isHidden = false
@@ -588,8 +573,8 @@ class IndicatorView: UIView {
                 self.isHidden = false
                 
                 self.titleLabel.text = title
-                self.mainView.backgroundColor = !isBlack ? UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.9) : .black
-                self.titleLabel.textColor = !isBlack ? .black : .white
+                //self.mainView.backgroundColor = !isBlack ? UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 0.9) : .black
+
                 self.alpha = 1
                 self.backgroundHelper.alpha = 1
                 self.backgroundView.alpha = 1
@@ -624,7 +609,7 @@ class IndicatorView: UIView {
         if let function = vcActionOnTFHide as? (String, String?) -> () {
             DispatchQueue.main.async {
                 
-                self.closeButton.isHidden = true
+              //  self.closeButton.isHidden = true
                 self.additionalDoneButton.isHidden = true
                /* if self.showingMessage {
                     self.showMessage(show: false, title: "", helpAction: nil) { (_) in
@@ -728,6 +713,7 @@ class IndicatorView: UIView {
                 UIView.animate(withDuration: 0.22) {
                     self.backgroundView.layer.transform = CATransform3DTranslate(CATransform3DIdentity, 0, window.frame.height + 100, 0)
                 } completion: { (_) in
+                    self.titleLabel.font = self.normalTitleSize
                     self.removeFromSuperview()
                     self.setAllHidden()
                     completionn(true)
@@ -785,10 +771,10 @@ class IndicatorView: UIView {
         isShowing = false
         
         DispatchQueue.main.async {
-            self.descriptionLabel.isHidden = true
+          //  self.descriptionLabel.isHidden = true
             self.leftButton.superview?.isHidden = true
            // self.leftButton.superview?.superview?.isHidden = false
-            self.closeButton.isHidden = true
+          //  self.closeButton.isHidden = true
             self.imageView.superview?.isHidden = true
             self.textField.text = ""
             self.repeatePasswordTextField.text = ""
