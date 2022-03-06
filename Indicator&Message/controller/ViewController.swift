@@ -14,11 +14,24 @@ class ViewController: UIViewController {
     lazy var ai = AppDelegate.shared?.ai ?? IndicatorView(frame: .zero)
     lazy var message = AppDelegate.shared?.message ?? MessageView(frame: .zero)
     
+   
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        mem2 = MemoryTest(s: "popupVCtestAppeare")
+        
+        if tableView != nil {
+            tableView.delegate = self
+            tableView.dataSource = self
+            loadData()
+        }
+        
+    }
+    
     func loadData() {
         tableData = [
             TableDataSections(title: "Activity indicator", cells: createAISection(), hidden: false, headerSwitch: nil, errorText: "some test error some test error some test error some test error some test error"),
             TableDataSections(title: "message", cells: createMessageSection(), hidden: false, headerSwitch: nil, errorText: ""),
-            TableDataSections(title: "leak test \(appDelegate?.globals?.memoryLeakCount ?? -1)", cells: memoryLeakTestSection(), hidden: false, headerSwitch: nil, errorText: ""),
             TableDataSections(title: "Segues", cells: createSequesSection(), hidden: false, headerSwitch: nil, errorText: "")
         ]
     }
@@ -60,19 +73,7 @@ class ViewController: UIViewController {
     }
 
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //object sets nil on ViewController disapeare
-        
-        mem2 = MemoryTest(s: "popupVCtestAppeare")
-        
-        if tableView != nil {
-            tableView.delegate = self
-            tableView.dataSource = self
-            loadData()
-        }
-        
-    }
+    
 
     lazy var appDelegate:AppDelegate? = {
         return AppDelegate.shared
@@ -86,31 +87,36 @@ class ViewController: UIViewController {
     }
     
     func showActionsTESTS(title: String, text: String, needNext: Bool = false, type: IndicatorView.ViewType = .standard, backTimer: Int? = nil) {
-        let okButton = IndicatorView.button(title: "OK", style: (type == .error || type == .standardError) ? .error : .standart, close: true) { _ in
+        let okButton = IndicatorView.button(title: "close", style: (type == .error || type == .standardError) ? .error : .standart, close: true) { _ in
             
         }
         
-        let nextButton = IndicatorView.button(title: "Next", style: .success, close: false) { _ in
-            sleep(5)
+        let nextButton = IndicatorView.button(title: "go", style: .success, close: false) { _ in
                 self.performSegue(withIdentifier: "toNav", sender: self)
-                sleep(5)
-                    
-                    if let hideTimer = backTimer {
-                        self.ai.show { _ in
-                            sleep(UInt32(Int(hideTimer)))
-                                self.navigationController?.popToRootViewController(animated: true)
-                                sleep(2)
-                                    self.ai.fastHide { _ in
-                                        
-                                    }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                if let hideTimer = backTimer {
+                   // self.ai.show { _ in
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Int(hideTimer))) {
+                        self.navigationController?.popToRootViewController(animated: true)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                            self.ai.fastHide { _ in
                                 
-                            
+                            }
                         }
-                    } else {
-                        self.ai.fastHide { _ in
+                    }
                             
-                        }
-    }
+                            
+                        
+                  //  }
+                } else {
+                    self.ai.fastHide { _ in
+                        
+                    }
+              }
+            }
+                    
     }
         
         
@@ -165,30 +171,26 @@ class ViewController: UIViewController {
             
             
             DispatchQueue.main.async {
-                self.ai.show { _ in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
-                        self.showActionsTESTS(title: "scss", text: "Some scss", type: .succsess)
-                    }
-                }
+                self.showActionsTESTS(title: "scss", text: "Some scss", type: .succsess)
             }
             
         }
-        let nextButton = buttonDataType(title: "Ok or next", activityLoading: false, type: .standartButton, enabled: true) {
+        let nextButton = buttonDataType(title: "ai between vcs", activityLoading: false, type: .standartButton, enabled: true) {
             
             DispatchQueue.main.async {
                 self.ai.show { _ in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
-                        self.showActionsTESTS(title: "Error", text: "Close or nect", needNext: true, type: .standard)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                        self.showActionsTESTS(title: "Error", text: "Close or next", needNext: true, type: .standard)
                     }
                 }
             }
         }
         
-        let nextBack = buttonDataType(title: "ok or next and back", activityLoading: false, type: .standartButton, enabled: false) {
+        let nextBack = buttonDataType(title: "ai between vcs and back", activityLoading: false, type: .standartButton, enabled: false) {
             DispatchQueue.main.async {
                 self.ai.show { _ in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
-                        self.showActionsTESTS(title: "Error", text: "Close or nect", needNext: true, type: .standard, backTimer: 5)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                        self.showActionsTESTS(title: "Error", text: "Close or nect", needNext: true, type: .standard, backTimer: 2)
                     }
                 }
             }
@@ -217,8 +219,8 @@ class ViewController: UIViewController {
             TableDataCell(cellType: .button, button: errorButton),
             TableDataCell(cellType: .button, button: scssButton),
             TableDataCell(cellType: .button, button: nextButton),
-            TableDataCell(cellType: .button, button: aLotButtons),
             TableDataCell(cellType: .button, button: nextBack),
+            TableDataCell(cellType: .button, button: aLotButtons),
             TableDataCell(cellType: .button, button: stopTimer),
             TableDataCell(cellType: .button, button: errorRapButton),
             TableDataCell(cellType: .button, button: succsRapButton),
@@ -364,6 +366,7 @@ class ButtonCell: UITableViewCell {
             _buttonTitle = newValue
             DispatchQueue.main.async {
                 self.mainButton.setTitle(newValue, for: .normal)
+                
             }
         }
         get {
